@@ -6,6 +6,9 @@
   "description": "Makes links and `@mentions` in markdown beautiful and interactive.",
   "author": "Lu Jiejie",
   "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  },
   "funding": "https://github.com/sponsors/antfu",
   "homepage": "https://github.com/antfu/markdown-it-magic-link#readme",
   "repository": {

@@ -48,5 +48,5 @@ Custom display: {@bilibili:lu-jiejie|My Display Name}
 
 <!-- Badges -->
 
-[npm-version-src]: https://img.shields.io/npm/v/markdown-it-magic-link?style=flat&colorA=080f12&colorB=1fa669
-[npm-version-href]: https://npmjs.com/package/markdown-it-magic-link
+[npm-version-src]: https://img.shields.io/npm/v/@lu-jiejie/markdown-it-magic-link?style=flat&colorA=080f12&colorB=1fa669
+[npm-version-href]: https://www.npmjs.com/package/@lu-jiejie/markdown-it-magic-link
