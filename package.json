@@ -21,23 +21,12 @@
   ],
   "sideEffects": false,
   "exports": {
-    ".": {
-      "types": "./dist/index.d.ts",
-      "import": "./dist/index.mjs",
-      "require": "./dist/index.cjs"
-    }
+    ".": "./dist/index.js",
+    "./package.json": "./package.json"
   },
-  "main": "./dist/index.mjs",
-  "module": "./dist/index.mjs",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
-  "typesVersions": {
-    "*": {
-      "*": [
-        "./dist/*",
-        "./dist/index.d.ts"
-      ]
-    }
-  },
   "files": [
     "dist"
   ],
