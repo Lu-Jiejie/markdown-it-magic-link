@@ -139,10 +139,10 @@ it('platform at mentions', () => {
 
   expect(result)
     .toMatchInlineSnapshot(`
-      "<p><a href="https://space.bilibili.com/123456" class="markdown-magic-link markdown-magic-link-platform-at"><span class="markdown-magic-link-image" style="background-image: url('https://i0.hdslb.com/bfs/face/avatar.jpg');"></span>Lu Jiejie</a>
-      <a href="https://space.bilibili.com/123456" class="markdown-magic-link markdown-magic-link-platform-at"><span class="markdown-magic-link-image" style="background-image: url('https://i0.hdslb.com/bfs/face/avatar.jpg');"></span>LU JIEJIE</a>
-      <a href="https://space.bilibili.com/custom" class="markdown-magic-link markdown-magic-link-platform-at"><span class="markdown-magic-link-image" style="background-image: url('https://i0.hdslb.com/bfs/face/avatar.jpg');"></span>LU JIEJIE</a>
-      <a href="https://twitter.com/someone" class="markdown-magic-link markdown-magic-link-platform-at"><span class="markdown-magic-link-image" style="background-image: url('https://pbs.twimg.com/profile_images/avatar.jpg');"></span>SOMEONE</a></p>
+      "<p><a href="https://space.bilibili.com/123456" class="markdown-magic-link markdown-magic-link-bilibili-at"><span class="markdown-magic-link-image" style="background-image: url('https://i0.hdslb.com/bfs/face/avatar.jpg');"></span>Lu Jiejie</a>
+      <a href="https://space.bilibili.com/123456" class="markdown-magic-link markdown-magic-link-bilibili-at"><span class="markdown-magic-link-image" style="background-image: url('https://i0.hdslb.com/bfs/face/avatar.jpg');"></span>LU JIEJIE</a>
+      <a href="https://space.bilibili.com/custom" class="markdown-magic-link markdown-magic-link-bilibili-at"><span class="markdown-magic-link-image" style="background-image: url('https://i0.hdslb.com/bfs/face/avatar.jpg');"></span>LU JIEJIE</a>
+      <a href="https://twitter.com/someone" class="markdown-magic-link markdown-magic-link-twitter-at"><span class="markdown-magic-link-image" style="background-image: url('https://pbs.twimg.com/profile_images/avatar.jpg');"></span>SOMEONE</a></p>
       "
     `)
 })

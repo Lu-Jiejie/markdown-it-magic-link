@@ -54,7 +54,7 @@ export interface MarkdownItMagicLinkOptions extends MagicLinkHandlerLinkOptions 
 
   /**
    * Platform users configuration
-   * e.g., { 'bilibili': { 'lu-jiejie': { link: 'https://space.bilibili.com/123', avatarUrl: 'https://avatar.url' } } }
+   * e.g., { 'bilibili': { 'username': { link: 'https://space.bilibili.com/123', avatarUrl: 'https://avatar.url' } } }
    */
   platformUsers?: Record<string, Record<string, PlatformUserConfig>>
 }
@@ -172,7 +172,7 @@ export function handlerPlatformAt(options?: { platformUsers?: Record<string, Rec
       return {
         text: customText || userConfig.displayName || username.toUpperCase(),
         link: customLink || userConfig.link,
-        type: 'platform-at',
+        type: `${platform}-at`,
         imageUrl: userConfig.avatarUrl,
       }
     },
