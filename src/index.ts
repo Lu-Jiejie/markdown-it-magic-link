@@ -20,6 +20,21 @@ export interface MagicLinkHandler {
   postprocess?: (parsed: ResolvedMagicLink) => ResolvedMagicLink | void
 }
 
+export interface PlatformUserConfig {
+  /**
+   * The profile link for this user
+   */
+  link: string
+  /**
+   * The avatar URL for this user
+   */
+  avatarUrl: string
+  /**
+   * Optional display name for this user
+   */
+  displayName?: string
+}
+
 export interface MagicLinkHandlerLinkOptions {
   /**
    * Map of link names to URLs. Case-sensitive.
@@ -36,6 +51,12 @@ export interface MarkdownItMagicLinkOptions extends MagicLinkHandlerLinkOptions 
    * Array of RegExp and string pairs to override the default image URL
    */
   imageOverrides?: [RegExp | string, string][]
+
+  /**
+   * Platform users configuration
+   * e.g., { 'bilibili': { 'lu-jiejie': { link: 'https://space.bilibili.com/123', avatarUrl: 'https://avatar.url' } } }
+   */
+  platformUsers?: Record<string, Record<string, PlatformUserConfig>>
 }
 
 const GITHUB_SPECIAL_ROUTES = [
@@ -96,6 +117,11 @@ export function handlerGitHubAt(): MagicLinkHandler {
         return false
 
       const login = loginAt.slice(1)
+
+      // Skip if it contains colon (platform:user format)
+      if (login.includes(':'))
+        return false
+
       return {
         text: text || login.toUpperCase(),
         link: link || `https://github.com/${login}`,
@@ -108,6 +134,46 @@ export function handlerGitHubAt(): MagicLinkHandler {
         const login = parsed.link.match(reGitHubScope)![1]
         if (!GITHUB_SPECIAL_ROUTES.includes(login) && parsed.imageUrl.startsWith('https://favicon.yandex.net'))
           parsed.imageUrl = `https://github.com/${login}.png`
+      }
+    },
+  }
+}
+
+export function handlerPlatformAt(options?: { platformUsers?: Record<string, Record<string, PlatformUserConfig>> }): MagicLinkHandler {
+  return {
+    name: 'platform-at',
+    handler(content: string) {
+      const parts = content.split('|').map(i => i.trim())
+      const loginAt = parts[0]
+      const customText = parts[1]
+      const customLink = parts[2]
+
+      if (!loginAt.startsWith('@'))
+        return false
+
+      const atPart = loginAt.slice(1)
+      const colonIndex = atPart.indexOf(':')
+
+      if (colonIndex === -1)
+        return false
+
+      const platform = atPart.slice(0, colonIndex)
+      const username = atPart.slice(colonIndex + 1)
+
+      if (!platform || !username)
+        return false
+
+      const platformConfig = options?.platformUsers?.[platform]
+      const userConfig = platformConfig?.[username]
+
+      if (!userConfig)
+        return false
+
+      return {
+        text: customText || userConfig.displayName || username.toUpperCase(),
+        link: customLink || userConfig.link,
+        type: 'platform-at',
+        imageUrl: userConfig.avatarUrl,
       }
     },
   }
@@ -126,6 +192,7 @@ export default function MarkdownItMagicLink(md: MarkdownIt, options: MarkdownItM
   const {
     handlers = [
       handlerLink(options),
+      handlerPlatformAt(options),
       handlerGitHubAt(),
     ],
   } = options

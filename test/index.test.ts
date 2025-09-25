@@ -109,3 +109,68 @@ it('github link', () => {
       "
     `)
 })
+
+it('platform at mentions', () => {
+  const md = MarkdownIt()
+  md.use(MarkdownItMagicLink, {
+    platformUsers: {
+      bilibili: {
+        'lu-jiejie': {
+          link: 'https://space.bilibili.com/123456',
+          avatarUrl: 'https://i0.hdslb.com/bfs/face/avatar.jpg',
+          displayName: 'Lu Jiejie',
+        },
+      },
+      twitter: {
+        someone: {
+          link: 'https://twitter.com/someone',
+          avatarUrl: 'https://pbs.twimg.com/profile_images/avatar.jpg',
+        },
+      },
+    },
+  })
+
+  const result = md.render([
+    '{@bilibili:lu-jiejie}',
+    '{@bilibili:lu-jiejie|LU JIEJIE}',
+    '{@bilibili:lu-jiejie|LU JIEJIE|https://space.bilibili.com/custom}',
+    '{@twitter:someone}',
+  ].join('\n'))
+
+  expect(result)
+    .toMatchInlineSnapshot(`
+      "<p><a href="https://space.bilibili.com/123456" class="markdown-magic-link markdown-magic-link-platform-at"><span class="markdown-magic-link-image" style="background-image: url('https://i0.hdslb.com/bfs/face/avatar.jpg');"></span>Lu Jiejie</a>
+      <a href="https://space.bilibili.com/123456" class="markdown-magic-link markdown-magic-link-platform-at"><span class="markdown-magic-link-image" style="background-image: url('https://i0.hdslb.com/bfs/face/avatar.jpg');"></span>LU JIEJIE</a>
+      <a href="https://space.bilibili.com/custom" class="markdown-magic-link markdown-magic-link-platform-at"><span class="markdown-magic-link-image" style="background-image: url('https://i0.hdslb.com/bfs/face/avatar.jpg');"></span>LU JIEJIE</a>
+      <a href="https://twitter.com/someone" class="markdown-magic-link markdown-magic-link-platform-at"><span class="markdown-magic-link-image" style="background-image: url('https://pbs.twimg.com/profile_images/avatar.jpg');"></span>SOMEONE</a></p>
+      "
+    `)
+})
+
+it('platform at mentions - not configured', () => {
+  const md = MarkdownIt()
+  md.use(MarkdownItMagicLink, {
+    platformUsers: {
+      bilibili: {
+        'lu-jiejie': {
+          link: 'https://space.bilibili.com/123456',
+          avatarUrl: 'https://i0.hdslb.com/bfs/face/avatar.jpg',
+        },
+      },
+    },
+  })
+
+  const result = md.render([
+    '{@bilibili:unknown-user}',
+    '{@unknown-platform:user}',
+    '{@invalid}',
+  ].join('\n'))
+
+  expect(result)
+    .toMatchInlineSnapshot(`
+      "<p>{@bilibili:unknown-user}
+      {@unknown-platform:user}
+      <a href="https://github.com/invalid" class="markdown-magic-link markdown-magic-link-github-at"><span class="markdown-magic-link-image" style="background-image: url('https://github.com/invalid.png');"></span>INVALID</a></p>
+      "
+    `)
+})
