@@ -1,8 +1,8 @@
 import type MarkdownIt from 'markdown-it'
 
-const reCapture = /^\{([^\{\}\n]*?)\}([^\[\]\{\}\(\)]|$)/i
+const reCapture = /^\{([^{}\n]*)\}([^[\]{}()]|$)/
 const reHtmlProtocol = /^https?:\/\//i
-const reGitHubScope = /^(?:https?:\/\/)?github\.com\/([\w_-]*?)(?:$|\/)/
+const reGitHubScope = /^(?:https?:\/\/)?github\.com\/([\w-]*)(?:$|\/)/
 
 export interface ParsedMagicLink {
   text?: string

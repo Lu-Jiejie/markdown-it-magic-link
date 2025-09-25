@@ -1,5 +1,5 @@
-import { expect, it } from 'vitest'
 import MarkdownIt from 'markdown-it'
+import { expect, it } from 'vitest'
 import MarkdownItMagicLink from '../src'
 
 it('basic', () => {
